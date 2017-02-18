@@ -9,7 +9,6 @@ public:
 	//num of nodes
 	//unordered map of edges + cost
 	//read from file in constructor
-	//in main - priority queue 
 	//goal node
 	//neighbours - data structure? vector?
 private:

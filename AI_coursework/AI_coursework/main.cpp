@@ -1,4 +1,7 @@
-
+#include <unordered_map>
+#include "GraphParser.h"
+#include "Edge.h"
+#include "Position.h"
 
 int main(int argc, char *argv[]) {
 	
@@ -7,7 +10,7 @@ int main(int argc, char *argv[]) {
 	//came_from = vector/unordered_set/set of nodes(ints)
 	//cost_so_far = vector/unordered_set/set of 
 
-	frontier = PriorityQueue()
+	frontier = PriorityQueue() // of nodes
 	frontier.put(start, 0)
 	came_from = {}
 	cost_so_far = {}
@@ -28,5 +31,17 @@ int main(int argc, char *argv[]) {
 				frontier.put(next, priority)
 				came_from[next] = current
 	*/
+
+	//user input for start and goal node
+	//display route - use came_from
+	//display total cost
+
+	int nodeCount;
+	std::unordered_map<Edge, int, EdgeHasher> edgesNcosts;
+	std::unordered_map<int, Position> nodes;
+
+
+	GraphParser::parseGraph("graphData.txt", nodeCount, edgesNcosts, nodes);
+
 	return 0;
 }
