@@ -2,7 +2,7 @@
 
 #include "Edge.h"
 
-Graph::Graph()
+Graph::Graph(const char * fileName)
 {
-
+	GraphParser::parseGraph(fileName, nodeCount, edgesNcosts, nodes);
 }

@@ -36,12 +36,14 @@ int main(int argc, char *argv[]) {
 	//display route - use came_from
 	//display total cost
 
-	int nodeCount;
+	/*int nodeCount;
 	std::unordered_map<Edge, int, EdgeHasher> edgesNcosts;
 	std::unordered_map<int, Position> nodes;
 
 
-	GraphParser::parseGraph("graphData.txt", nodeCount, edgesNcosts, nodes);
+	GraphParser::parseGraph("graphData.txt", nodeCount, edgesNcosts, nodes);*/
+
+	Graph graph("graphData.txt");
 
 	return 0;
 }
