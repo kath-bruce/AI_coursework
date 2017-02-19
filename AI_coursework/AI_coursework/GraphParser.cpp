@@ -16,7 +16,7 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	std::stringstream sstream(input);
 
 	char g, equals, comma, dash, plus;
-	std::string nodeStr, nodeposStr, edges, costs, posStr;
+	std::string nodeStr, nodeposStr, edgesAndCosts, posStr;
 	int nodeNum, posX, posY, edgeCost;
 
 	sstream >> g;
@@ -70,17 +70,30 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	for (int i = 0; i < nodeCount; i++) {
 		sstream.str("");
 		sstream.clear();
-		std::getline(graphData, input);
+		std::getline(graphData, input, '=');
+
 		sstream.str(input);
 		sstream >> nodeNum;
 		if (nodeNum != i) {
 			std::cerr << "problem with file " << fname << "\nnodenum does not match up with i\ni: " << i << "\n";
 		}
-		//FIXME
-		sstream >> equals >> posStr >> equals;
-		if (posStr != "pos" || equals != '=') {
-			std::cerr << "problem with file " << fname << "\n=pos= is not =pos=\ni: " << i << "\n" << posStr << " " << equals << "\n";
+
+		sstream.str("");
+		sstream.clear();
+		std::getline(graphData, input, '=');
+
+		sstream.str(input);
+
+		sstream >> posStr;
+		if (posStr != "pos") {
+			std::cerr << "problem with file " << fname << "\n=pos= is not =pos=\ni: " << i << "\n" << posStr << "\n";
 		}
+
+		sstream.str("");
+		sstream.clear();
+		std::getline(graphData, input);
+
+		sstream.str(input);
 		Position position;
 		sstream >> position.x >> comma >> position.y;
 
@@ -97,14 +110,17 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	std::getline(graphData, input);
 	sstream.str(input);
 
-	sstream >> edges >> plus >> costs;
+	sstream >> edgesAndCosts;
 
-	if (edges != "edges" || plus != '+' || costs != "cost") {
-		std::cerr << "problem with file " << fname << "\nedges+cost is not edges+cost\n" << edges << " " << plus << " " << costs << "\n";
+	if (edgesAndCosts != "edges+cost") {
+		std::cerr << "problem with file " << fname << "\nedges+cost is not edges+cost\n" << edgesAndCosts << "\n";
 	}
 	else {
 		std::cout << "edges+cost is fine\n";
 	}
+
+	sstream.str("");
+	sstream.clear();
 
 	while (std::getline(graphData, input)) {
 		sstream.str(input);
