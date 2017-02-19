@@ -52,32 +52,51 @@ int main(int argc, char *argv[]) {
 	std::unordered_map<Node, Node, NodeHasher> came_from;
 	std::unordered_map<Node, int, NodeHasher> cost_so_far;
 
-	came_from.insert({ graph.getStartNode(), Node() }); // startnode had no prior node (-1)
-	cost_so_far.insert({ graph.getStartNode(), 0 }); //just started so no travel cost
+	//came_from.insert({ graph.getStartNode(), Node() }); // startnode had no prior node (-1)
+	//cost_so_far.insert({ graph.getStartNode(), 0 }); //just started so no travel cost
+
+	came_from[graph.getStartNode()] = graph.getStartNode();
+	cost_so_far[graph.getStartNode()] = 0;
 
 	while (!frontier.empty()) {
 		Node current = frontier.top();
+		//pop from frontier
+		frontier.pop();
 
 		if (graph.isGoal(current)) {
+			graph.setGoalNode(current);
 			std::cout << "reached goal\n";
 			break;
 		}
 
 		for (auto neighbour : graph.getNeighbours(current)) {
-			int new_cost = cost_so_far.at(current) + graph.getCost(current, neighbour);
-			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far.at(neighbour))
+			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);
+			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
-				//cost_so_far.at(neighbour) = new_cost;
+				cost_so_far[neighbour] = new_cost;
 				neighbour.priority = new_cost + graph.heuristic(graph.getGoalNode(), neighbour);
 				frontier.push(neighbour);
-				came_from.insert({ neighbour,current });
-				cost_so_far.insert({ neighbour, new_cost });
+				came_from[neighbour] = current;
 			}
 
 		}
-		//pop from frontier
-		frontier.pop();
 		std::cout << "current node: " << current.nodeNum << std::endl;
+	}
+
+	//reconstruct path
+	std::vector<Node> path;
+
+	Node current = graph.getGoalNode();
+
+	path.push_back(current);
+
+	while (current != graph.getStartNode()) {
+		current = came_from[current];
+		path.push_back(current);
+	}
+
+	for (int i = 0; i < path.size(); i++) {
+		std::cout << path[i].nodeNum << std::endl;
 	}
 
 	return 0;

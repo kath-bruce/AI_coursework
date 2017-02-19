@@ -19,6 +19,10 @@ struct Node {
 	bool operator==(const Node &other) const {
 		return (nodeNum == other.nodeNum && priority == other.priority);
 	}
+
+	bool operator!=(const Node &other) const {
+		return (nodeNum != other.nodeNum || priority != other.priority);
+	}
 };
 
 struct NodeHasher {
