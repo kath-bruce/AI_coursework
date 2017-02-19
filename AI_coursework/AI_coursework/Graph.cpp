@@ -6,7 +6,6 @@ Graph::Graph(const char * fileName)
 	goalNode.nodeNum = 60;
 }
 
-//todo: implement get neighbours
 std::vector<Node> Graph::getNeighbours(Node current)
 {
 	std::vector<Node> neighbours;
@@ -46,13 +45,21 @@ int Graph::getCost(Node current, Node neighbour)
 	edge.to = neighbour.nodeNum;
 
 	if (!edgesNcosts.count(edge)) {
-		return -1;
+		edge.from = neighbour.nodeNum;
+		edge.to = current.nodeNum;
+		if (!edgesNcosts.count(edge)) {
+			return -1;
+		}
+		else {
+			return edgesNcosts.at(edge);
+		}
+
 	}
 	else {
 		return edgesNcosts.at(edge);
 	}
 
-	return -1;
+	//return -1;
 }
 
 int Graph::heuristic(Node goal, Node next)

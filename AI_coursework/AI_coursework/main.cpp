@@ -89,8 +89,9 @@ int main(int argc, char *argv[]) {
 	Node current = graph.getGoalNode();
 
 	path.push_back(current);
-
+	int totalCost = 0;
 	while (current != graph.getStartNode()) {
+		totalCost += graph.getCost(current, came_from[current]);
 		current = came_from[current];
 		path.push_back(current);
 	}
@@ -98,6 +99,8 @@ int main(int argc, char *argv[]) {
 	for (int i = 0; i < path.size(); i++) {
 		std::cout << path[i].nodeNum << std::endl;
 	}
+
+	std::cout << "Total path cost: " << totalCost << std::endl;
 
 	return 0;
 }
