@@ -1,8 +1,8 @@
 #include "GraphParser.h"
 
-void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered_map<Edge, int, EdgeHasher>& edgesNcosts, std::unordered_map<int, Position>& nodes)
+void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered_map<Edge, int, EdgeHasher>& edgesNcosts, std::unordered_map<Node, Position, NodeHasher>& nodes)
 {
-	// TODO move var declarations
+	// TODO: move var declarations maybes
 
 	std::ifstream graphData;
 	graphData.open(fname);
@@ -21,7 +21,7 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 
 	sstream >> g;
 
-	if (!g == 'g') {
+	if (g != 'g') {
 		std::cerr << "problem with file " << fname << "\ng is not g\n" << g;
 	}
 	else {
@@ -100,8 +100,9 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 		if (comma != ',') {
 			std::cout << "comma is not comma\n" << comma << " i: " << i << "\n";
 		}
-
-		nodes.insert({i, position});
+		Node newNode;
+		newNode.nodeNum = i;
+		nodes.insert({newNode, position});
 	}
 	std::cout << "nodes inserted\n";
 

@@ -8,7 +8,7 @@ struct Edge {
 	int from, to;
 
 	bool operator==(const Edge &other) const {
-		return (from == other.from && to == other.to);
+		return ((from == other.from && to == other.to) ^ (from == other.to && to == other.from));
 	}
 };
 

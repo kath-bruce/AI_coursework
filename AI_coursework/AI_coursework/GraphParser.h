@@ -13,7 +13,7 @@
 
 class GraphParser {
 public:
-	static void parseGraph(const char *fname, int &nodeCount, std::unordered_map<Edge, int, EdgeHasher> &edgesNcosts, std::unordered_map<int, Position> &nodes);
+	static void parseGraph(const char *fname, int &nodeCount, std::unordered_map<Edge, int, EdgeHasher> &edgesNcosts, std::unordered_map<Node, Position, NodeHasher> &nodes);
 	// ^^ return graph?
 private:
 	//parse edgesNcosts
