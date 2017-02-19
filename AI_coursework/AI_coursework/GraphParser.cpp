@@ -15,9 +15,9 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	std::getline(graphData, input);
 	std::stringstream sstream(input);
 
-	char g, equals, comma, dash, plus;
-	std::string nodeStr, nodeposStr, edgesAndCosts, posStr;
-	int nodeNum, posX, posY, edgeCost;
+	char g, equals, comma, dash;
+	std::string nodeStr, nodeposStr, edgesAndCostsStr, posStr;
+	int nodeNum, edgeCost;
 
 	sstream >> g;
 
@@ -110,10 +110,10 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	std::getline(graphData, input);
 	sstream.str(input);
 
-	sstream >> edgesAndCosts;
+	sstream >> edgesAndCostsStr;
 
-	if (edgesAndCosts != "edges+cost") {
-		std::cerr << "problem with file " << fname << "\nedges+cost is not edges+cost\n" << edgesAndCosts << "\n";
+	if (edgesAndCostsStr != "edges+cost") {
+		std::cerr << "problem with file " << fname << "\nedges+cost is not edges+cost\n" << edgesAndCostsStr << "\n";
 	}
 	else {
 		std::cout << "edges+cost is fine\n";
@@ -144,5 +144,5 @@ void GraphParser::parseGraph(const char * fname, int & nodeCount, std::unordered
 	std::cout << "edges and costs inserted\n";
 
 	std::cout << "loaded and parsed " << fname << "\n";
-	graphData.close(); //TODO move this
+	graphData.close();
 }
