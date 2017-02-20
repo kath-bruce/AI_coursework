@@ -69,7 +69,7 @@ int Graph::heuristic(Node goal, Node next)
 	//todo: clean up code
 	Position goalPos = nodes.at(goal);
 	Position nextPos = nodes.at(next);
-	int result = hypot((goalPos.x - nextPos.x), (goalPos.y - nextPos.y)) * 5;
+	int result = hypot((goalPos.x - nextPos.x), (goalPos.y - nextPos.y))/* * 1.5*/;
 	//manhattan distance or hypotenuse
 	return result;
 	//return abs(goalPos.x - nextPos.x) + abs(goalPos.y - nextPos.y);
