@@ -1,6 +1,6 @@
 
 #include <queue>
-#include <vector> // needed?
+#include <vector> 
 #include <unordered_map>
 #include "Graph.h"
 
@@ -8,9 +8,6 @@
 int main(int argc, char *argv[]) {
 
 	/*
-	//nodes are ints with positions
-	//came_from = vector/unordered_set/set of nodes(ints)
-	//cost_so_far = vector/unordered_set/set of
 
 	frontier = PriorityQueue() // of nodes
 	frontier.put(start, 0)
@@ -34,26 +31,14 @@ int main(int argc, char *argv[]) {
 				came_from[next] = current
 	*/
 
-	//user input for start and goal node
-	//display route - use came_from
-	//display total cost
-	//display time taken
-
 	Graph graph("graphData.txt");
 
-	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier; // priority queue may need to be less than ordered
+	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier;
 
 	frontier.push(graph.getStartNode());
-	//frontier.push(100);
-	//frontier.push(50);
-
-	//std::cout << frontier.top() << std::endl;
 
 	std::unordered_map<Node, Node, NodeHasher> came_from;
 	std::unordered_map<Node, int, NodeHasher> cost_so_far;
-
-	//came_from.insert({ graph.getStartNode(), Node() }); // startnode had no prior node (-1)
-	//cost_so_far.insert({ graph.getStartNode(), 0 }); //just started so no travel cost
 
 	came_from[graph.getStartNode()] = graph.getStartNode();
 	cost_so_far[graph.getStartNode()] = 0;
