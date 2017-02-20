@@ -12,12 +12,6 @@
 class Graph {
 public:
 	Graph(const char * fileName);
-	//start node
-	//num of nodes
-	//unordered map of edges + cost
-	//read from file in constructor
-	//goal node
-	//neighbours - data structure? vector?
 	void setStartNode(Node startNodeX) { if (startNodeX.nodeNum >= 0 && startNodeX.nodeNum <= nodeCount - 1) startNode = startNodeX; }
 	Node getStartNode() { return startNode; }
 	void setGoalNode(Node goalNodeX) { if (goalNodeX.nodeNum >= 0 && goalNodeX.nodeNum <= nodeCount - 1) goalNode = goalNodeX;}

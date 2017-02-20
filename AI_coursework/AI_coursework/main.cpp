@@ -32,7 +32,6 @@ int main(int argc, char *argv[]) {
 	*/
 
 	Graph graph("graphData.txt");
-
 	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier;
 
 	frontier.push(graph.getStartNode());

@@ -1,3 +1,4 @@
+#include <math.h>
 #include "Graph.h"
 
 Graph::Graph(const char * fileName)
@@ -65,11 +66,11 @@ int Graph::getCost(Node current, Node neighbour)
 int Graph::heuristic(Node goal, Node next)
 {
 	//todo: error checking!!!!
-
+	//todo: clean up code
 	Position goalPos = nodes.at(goal);
 	Position nextPos = nodes.at(next);
-
+	int result = hypot((goalPos.x - nextPos.x), (goalPos.y - nextPos.y)) * 5;
 	//manhattan distance or hypotenuse
-	//return sqrt((goalPos.x - nextPos.x)^2 + (goalPos.y - nextPos.y)^2);
-	return abs(goalPos.x - nextPos.x) + abs(goalPos.y - nextPos.y);
+	return result;
+	//return abs(goalPos.x - nextPos.x) + abs(goalPos.y - nextPos.y);
 }
