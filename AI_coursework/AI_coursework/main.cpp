@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 	Graph graph("graphData.txt");
 	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier;
 	std::vector<Node> frontierVector;
-	graph.setStartNode(0);
-	graph.setGoalNode(60);
+	graph.setStartNode(1);
+	graph.setGoalNode(61);
 
 	frontier.push(graph.getStartNode());
 	frontierVector.push_back(graph.getStartNode());
@@ -51,10 +51,15 @@ int main(int argc, char *argv[]) {
 
 	while (!frontier.empty()) {
 		iterations++;
-
 		//CURRENT SHOULD BE SOMETHING DIFFERENT??!¬?!?!?!??!?
 		//current should be the one with the better heuristic?? (less or greater than)
+		
+		//Node temp = current;
+		//current = frontier.top();
 
+		//if (current.heuristicCost < temp.heuristicCost) {
+			//current = temp;
+		//}
 		Node current = frontier.top();
 		//pop from frontier
 		frontier.pop();
@@ -70,7 +75,9 @@ int main(int argc, char *argv[]) {
 			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
 				cost_so_far[neighbour] = new_cost;
-				neighbour.priority = new_cost + graph.heuristic(graph.getGoalNode(), neighbour);
+				int heuristicCost = graph.heuristic(graph.getGoalNode(), neighbour);
+				neighbour.priority = new_cost + heuristicCost;
+				//neighbour.heuristicCost = heuristicCost;
 				frontier.push(neighbour);
 				came_from[neighbour] = current;
 			}
