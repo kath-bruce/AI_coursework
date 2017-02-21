@@ -10,15 +10,29 @@ struct Node {
 	//int heuristicCost = 0;
 
 	friend bool operator< (const Node& n1, const Node& n2) {
-		return (n1.priority > n2.priority);
+		/*if (n1.priority >= n2.priority) {
+			if (n1.heuristicCost < n2.heuristicCost) {
+				return true;
+			}
+		}*/
+		return (n1.priority > n2.priority/* ^ n1.heuristicCost > n2.heuristicCost*/);
+		//return false;
 	}
 
 	friend bool operator> (const Node& n1, const Node& n2) {
-		return (n1.priority < n2.priority);
+		/*if (n1.priority <= n2.priority) {
+			if (n1.heuristicCost > n2.heuristicCost) {
+				return true;
+			}
+		}*/
+
+		return (n1.priority < n2.priority/* ^ n1.heuristicCost < n2.heuristicCost*/);
+		//return false;
 	}
 
 	bool operator==(const Node &other) const {
-		return (nodeNum == other.nodeNum/* && priority == other.priority && heuristicCost == other.heuristicCost*/);
+		return (nodeNum == other.nodeNum/* && priority == other.priority && heuristicCost == other.heuristicCost*/); // if i include comparing the priorities
+																													 // effects path result???
 	}
 
 	bool operator!=(const Node &other) const {
@@ -28,7 +42,7 @@ struct Node {
 
 struct NodeHasher {
 	std::size_t operator()(const Node &n) const {
-		return ((std::hash<int>()(n.nodeNum) ^ (std::hash<int>()(n.priority)/*) ^ (std::hash<int>()(n.heuristicCost)*/ << 1)));
+		return ((std::hash<int>()(n.nodeNum) ^ (std::hash<int>()(n.priority)/*) ^ (std::hash<int>()(n.heuristicCost)*//* << 1*/)));
 	}
 };
 

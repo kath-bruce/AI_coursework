@@ -59,8 +59,10 @@ int main(int argc, char *argv[]) {
 			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);
 			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
+				int heuristicCost = graph.heuristic(graph.getGoalNode(), neighbour);
 				cost_so_far[neighbour] = new_cost;
-				neighbour.priority = new_cost + graph.heuristic(graph.getGoalNode(), neighbour);
+				neighbour.priority = new_cost + heuristicCost;
+				//neighbour.heuristicCost = heuristicCost;
 				frontier.push(neighbour);
 				came_from[neighbour] = current;
 			}
