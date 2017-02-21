@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector> 
 #include <unordered_map>
+#include <chrono>
 #include "Graph.h"
 
 //TODO: move a* algorithm to own class
@@ -33,18 +34,27 @@ int main(int argc, char *argv[]) {
 
 	Graph graph("graphData.txt");
 	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier;
+	std::vector<Node> frontierVector;
 	graph.setStartNode(0);
 	graph.setGoalNode(60);
 
 	frontier.push(graph.getStartNode());
+	frontierVector.push_back(graph.getStartNode());
 
 	std::unordered_map<Node, Node, NodeHasher> came_from;
 	std::unordered_map<Node, int, NodeHasher> cost_so_far;
 
 	came_from[graph.getStartNode()] = graph.getStartNode();
 	cost_so_far[graph.getStartNode()] = 0;
+	int iterations = 0;
+	auto t1 = std::chrono::steady_clock::now();
 
 	while (!frontier.empty()) {
+		iterations++;
+
+		//CURRENT SHOULD BE SOMETHING DIFFERENT??!¬?!?!?!??!?
+		//current should be the one with the better heuristic?? (less or greater than)
+
 		Node current = frontier.top();
 		//pop from frontier
 		frontier.pop();
@@ -55,7 +65,7 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 
-		for (auto neighbour : graph.getNeighbours(current)) {
+		for (Node neighbour : graph.getNeighbours(current)) {
 			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);
 			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
@@ -68,6 +78,10 @@ int main(int argc, char *argv[]) {
 		}
 		std::cout << "current node: " << current.nodeNum << std::endl;
 	}
+
+	auto t2 = std::chrono::steady_clock::now();
+
+	auto totalTime = std::chrono::duration<double>(t2-t1).count();
 
 	//reconstruct path
 	std::vector<Node> path;
@@ -87,6 +101,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::cout << "Total path cost: " << totalCost << std::endl;
+	std::cout << "Total time taken: " << totalTime << " seconds\n";
+	std::cout << "Iterations: " << iterations << std::endl;
 
 	return 0;
 }
