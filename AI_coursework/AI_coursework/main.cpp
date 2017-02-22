@@ -5,6 +5,53 @@
 #include <chrono>
 #include "Graph.h"
 
+Node getTop(std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier) { // problem here
+	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontierCopy = frontier;
+	std::vector<Node> frontierVec;
+	while (!frontierCopy.empty()) {
+		frontierVec.push_back(frontierCopy.top());
+		frontierCopy.pop();
+	}
+	Node top = frontierVec[0];
+
+	for (Node node : frontierVec) {
+		if (node.priority <= top.priority) {
+			if (node.heuristicCost < top.heuristicCost) {
+				top = node;
+			}
+		}
+	}
+
+	//ugh
+	//shove frontier into vec
+	//find node that way
+
+	return top;
+}
+
+void removeTop(std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> &frontier, Node top) {
+	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontierCopy = frontier;
+	std::vector<Node> frontierVec;
+	while (!frontierCopy.empty()) {
+		frontierVec.push_back(frontierCopy.top());
+		frontierCopy.pop();
+	}
+	//frontierCopy = frontier;
+	//Node node;
+	for (int i = 0; i < frontierVec.size(); i++) {
+		if (frontierVec[i] == top) {
+			frontierVec.erase(frontierVec.begin() + i);
+		}
+	}
+
+	for (Node node : frontierVec) {
+		frontierCopy.push(node);
+	}
+
+	frontier = frontierCopy;
+	//return frontier instead of all this assignment and reassignment
+}
+
 //TODO: move a* algorithm to own class
 int main(int argc, char *argv[]) {
 
@@ -33,13 +80,13 @@ int main(int argc, char *argv[]) {
 	*/
 
 	Graph graph("graphData.txt");
-	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier;
-	std::vector<Node> frontierVector;
-	graph.setStartNode(0);
-	graph.setGoalNode(60);
+	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier; // maybe doesn't need to be priority queue
+	//std::vector<Node> frontierVec;
+	graph.setStartNode(1);
+	graph.setGoalNode(61);
 
 	frontier.push(graph.getStartNode());
-	frontierVector.push_back(graph.getStartNode());
+	//frontierVec.push_back(graph.getStartNode());
 
 	std::unordered_map<Node, Node, NodeHasher> came_from;
 	std::unordered_map<Node, int, NodeHasher> cost_so_far;
@@ -56,8 +103,10 @@ int main(int argc, char *argv[]) {
 		//current should be the one with the better heuristic?? (less or greater than)
 
 		Node current = frontier.top();
+		//Node current = getTop(frontier);
 		//pop from frontier
 		frontier.pop();
+		//removeTop(frontier, current);
 
 		if (graph.isGoal(current)) {
 			graph.setGoalNode(current);
@@ -66,14 +115,16 @@ int main(int argc, char *argv[]) {
 		}
 
 		for (Node neighbour : graph.getNeighbours(current)) {
-			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);
+			int heuristic = graph.heuristic(graph.getGoalNode(), neighbour);
+			int new_cost = cost_so_far[current] + /*graph.getCost(current, neighbour)*/heuristic;
 			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
 				cost_so_far[neighbour] = new_cost;
-				neighbour.priority = new_cost + graph.heuristic(graph.getGoalNode(), neighbour);
+				neighbour.heuristicCost = heuristic;
+				neighbour.priority = new_cost/* + heuristic*/;
 				frontier.push(neighbour);
 				came_from[neighbour] = current;
-			}
+			} //^^^ conflict between priority (gcost in c# example) and cost_so_far????
 
 		}
 		std::cout << "current node: " << current.nodeNum << std::endl;
@@ -81,7 +132,7 @@ int main(int argc, char *argv[]) {
 
 	auto t2 = std::chrono::steady_clock::now();
 
-	auto totalTime = std::chrono::duration<double>(t2-t1).count();
+	auto totalTime = std::chrono::duration<double>(t2 - t1).count();
 
 	//reconstruct path
 	std::vector<Node> path;
