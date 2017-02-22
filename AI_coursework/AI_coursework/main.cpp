@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 
 	path.push_back(current);
 	int totalCost = 0;
-	while (current != graph.getStartNode()) {
+	while (current.nodeNum != graph.getStartNode().nodeNum) {
 		totalCost += graph.getCost(current, came_from[current]);
 		current = came_from[current];
 		path.push_back(current);

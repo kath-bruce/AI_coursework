@@ -31,13 +31,14 @@ struct Node {
 	}
 
 	bool operator==(const Node &other) const {
-		return (nodeNum == other.nodeNum/* && priority == other.priority && heuristicCost == other.heuristicCost*/); // if i include comparing the priorities
-																													 // effects path result???
+		return (nodeNum == other.nodeNum && priority == other.priority/* && heuristicCost == other.heuristicCost*/); // if i include comparing the priorities
+																													 // effects path result??? - doesn't actually
+																													 // - came_from[] bug
 	}
 
-	bool operator!=(const Node &other) const {
-		return (nodeNum != other.nodeNum/* || priority != other.priority || heuristicCost != other.heuristicCost*/);
-	}
+	//bool operator!=(const Node &other) const {
+	//	return (nodeNum != other.nodeNum/* || priority != other.priority || heuristicCost != other.heuristicCost*/);
+	//}
 };
 
 struct NodeHasher {
