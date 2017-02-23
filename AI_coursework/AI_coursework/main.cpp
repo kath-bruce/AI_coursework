@@ -5,64 +5,9 @@
 #include <chrono>
 #include "Graph.h"
 
-//Node getTop(std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier) { // problem here
-//	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontierCopy = frontier;
-//	std::vector<Node> frontierVec;
-//	while (!frontierCopy.empty()) {
-//		frontierVec.push_back(frontierCopy.top());
-//		frontierCopy.pop();
-//	}
-//	Node top = frontierVec[0];
-//
-//	for (Node node : frontierVec) {
-//		if (node.priority <= top.priority) {
-//			if (node.heuristicCost < top.heuristicCost) {
-//				top = node;
-//			}
-//		}
-//	}
-//
-//	//ugh
-//	//shove frontier into vec
-//	//find node that way
-//
-//	return top;
-//}
-//
-//void removeTop(std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> &frontier, Node top) {
-//	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontierCopy = frontier;
-//	std::vector<Node> frontierVec;
-//	while (!frontierCopy.empty()) {
-//		frontierVec.push_back(frontierCopy.top());
-//		frontierCopy.pop();
-//	}
-//	//frontierCopy = frontier;
-//	//Node node;
-//	for (int i = 0; i < frontierVec.size(); i++) {
-//		if (frontierVec[i] == top) {
-//			frontierVec.erase(frontierVec.begin() + i);
-//		}
-//	}
-//
-//	for (Node node : frontierVec) {
-//		frontierCopy.push(node);
-//	}
-//
-//	frontier = frontierCopy;
-//	//return frontier instead of all this assignment and reassignment - nah
-//}
-//
-//bool containsNode(std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier , Node node) {
-//	while (!frontier.empty()) {
-//		if (node == frontier.top())
-//			return true;
-//
-//		frontier.pop();
-//	}
-//	return false;
-//}
-
 //TODO: move a* algorithm to own class
+//todo: possibly add user input
+//todo: comment code
 int main(int argc, char *argv[]) {
 
 	/*
@@ -90,13 +35,11 @@ int main(int argc, char *argv[]) {
 	*/
 
 	Graph graph("graphData.txt");
-	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier; // maybe doesn't need to be priority queue
-	//std::vector<Node> frontierVec;
-	graph.setStartNode(1);
-	graph.setGoalNode(61);
+	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier;
+	graph.setStartNode(0);
+	graph.setGoalNode(60);
 
 	frontier.push(graph.getStartNode());
-	//frontierVec.push_back(graph.getStartNode());
 
 	std::unordered_map<Node, Node, NodeHasher> came_from;
 	std::unordered_map<Node, int, NodeHasher> cost_so_far;
@@ -108,14 +51,9 @@ int main(int argc, char *argv[]) {
 
 	while (!frontier.empty()) {
 
-		//CURRENT SHOULD BE SOMETHING DIFFERENT??!¬?!?!?!??!?
-		//current should be the one with the better heuristic?? (less or greater than)
-
 		Node current = frontier.top();
-		//Node current = getTop(frontier);
-		//pop from frontier
+
 		frontier.pop();
-		//removeTop(frontier, current);
 
 		std::cout << "current node: " << current.nodeNum << std::endl;
 
@@ -127,17 +65,14 @@ int main(int argc, char *argv[]) {
 
 		for (Node neighbour : graph.getNeighbours(current)) {
 			int heuristic = graph.heuristic(graph.getGoalNode(), neighbour);
-			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);//heuristic;
-			//int new_cost = current.cost_so_far + heuristic;
-			if (!cost_so_far.count(neighbour)/*!containsNode(frontier, neighbour)*/ || new_cost < cost_so_far[neighbour])
+			int new_cost = cost_so_far[current] + graph.getCost(current, neighbour);
+			if (!cost_so_far.count(neighbour) || new_cost < cost_so_far[neighbour])
 			{
 				cost_so_far[neighbour] = new_cost;
-				//neighbour.cost_so_far = new_cost;
-				neighbour.heuristicCost = heuristic;
 				neighbour.priority = new_cost + heuristic;
 				frontier.push(neighbour);
-				came_from[neighbour] = current; // change this??
-			} //^^^ conflict between priority (gcost in c# example) and cost_so_far????
+				came_from[neighbour] = current;
+			}
 
 		}
 		iterations++;

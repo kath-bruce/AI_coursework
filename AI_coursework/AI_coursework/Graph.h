@@ -26,9 +26,9 @@ private:
 	Node startNode;
 	Node goalNode;
 	int nodeCount;
-	std::unordered_map<Edge, int, EdgeHasher> edgesNcosts; // should just be a vector of edges??? edge would have weight as well
-	std::unordered_map<Node, Position, NodeHasher> nodes; // node could have position inside class
-	//unordered_map allows to just get the specific edge or node without have to iterate through it
+	std::unordered_map<Edge, int, EdgeHasher> edgesNcosts; //note: should just be a vector of edges??? edge would have weight as well
+	std::unordered_map<Node, Position, NodeHasher> nodes; //note: node could have position inside class
+	//note:unordered_map allows to just get the specific edge or node without have to iterate through it
 };
 
 #endif
