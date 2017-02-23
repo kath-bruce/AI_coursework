@@ -8,6 +8,7 @@ struct Node {
 	int nodeNum = 0;
 	int priority = 0;
 	int heuristicCost = 0;
+	//int cost_so_far = 0;
 
 	friend bool operator< (const Node& n1, const Node& n2) {
 		/*if (n1.priority > n2.priority) {
@@ -31,7 +32,7 @@ struct Node {
 	}
 
 	bool operator==(const Node &other) const {
-		return (nodeNum == other.nodeNum && priority == other.priority && heuristicCost == other.heuristicCost); // if i include comparing the priorities
+		return (nodeNum == other.nodeNum && priority == other.priority && heuristicCost == other.heuristicCost/* && cost_so_far == other.cost_so_far*/); // if i include comparing the priorities
 																													 // effects path result??? - doesn't actually
 																													 // - came_from[] bug
 	}
@@ -41,16 +42,16 @@ struct Node {
 	//}
 };
 
-struct NodeComparator {
-	bool operator() (Node n1, Node n2) const {
-		if (n1.priority > n2.priority) {
-			if (n1.heuristicCost > n2.heuristicCost) {
-				return true;
-			}
-		}
-		return false;
-	}
-};
+//struct NodeComparator {
+//	bool operator() (Node n1, Node n2) const {
+//		if (n1.priority > n2.priority) {
+//			if (n1.heuristicCost > n2.heuristicCost) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+//};
 
 struct NodeHasher {
 	std::size_t operator()(const Node &n) const {
