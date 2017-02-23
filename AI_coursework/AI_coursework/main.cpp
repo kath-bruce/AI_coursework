@@ -92,8 +92,8 @@ int main(int argc, char *argv[]) {
 	Graph graph("graphData.txt");
 	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier; // maybe doesn't need to be priority queue
 	//std::vector<Node> frontierVec;
-	graph.setStartNode(0);
-	graph.setGoalNode(60);
+	graph.setStartNode(1);
+	graph.setGoalNode(61);
 
 	frontier.push(graph.getStartNode());
 	//frontierVec.push_back(graph.getStartNode());
@@ -107,7 +107,6 @@ int main(int argc, char *argv[]) {
 	auto t1 = std::chrono::steady_clock::now();
 
 	while (!frontier.empty()) {
-		iterations++;
 
 		//CURRENT SHOULD BE SOMETHING DIFFERENT??!¬?!?!?!??!?
 		//current should be the one with the better heuristic?? (less or greater than)
@@ -117,6 +116,8 @@ int main(int argc, char *argv[]) {
 		//pop from frontier
 		frontier.pop();
 		//removeTop(frontier, current);
+
+		std::cout << "current node: " << current.nodeNum << std::endl;
 
 		if (graph.isGoal(current)) {
 			graph.setGoalNode(current);
@@ -135,11 +136,11 @@ int main(int argc, char *argv[]) {
 				neighbour.heuristicCost = heuristic;
 				neighbour.priority = new_cost + heuristic;
 				frontier.push(neighbour);
-				came_from[neighbour] = current;
+				came_from[neighbour] = current; // change this??
 			} //^^^ conflict between priority (gcost in c# example) and cost_so_far????
 
 		}
-		std::cout << "current node: " << current.nodeNum << std::endl;
+		iterations++;
 	}
 
 	auto t2 = std::chrono::steady_clock::now();

@@ -32,7 +32,7 @@ struct Node {
 	}
 
 	bool operator==(const Node &other) const {
-		return (nodeNum == other.nodeNum && priority == other.priority && heuristicCost == other.heuristicCost/* && cost_so_far == other.cost_so_far*/); // if i include comparing the priorities
+		return (nodeNum == other.nodeNum/* && priority == other.priority && heuristicCost == other.heuristicCost*/); // if i include comparing the priorities
 																													 // effects path result??? - doesn't actually
 																													 // - came_from[] bug
 	}
@@ -55,7 +55,12 @@ struct Node {
 
 struct NodeHasher {
 	std::size_t operator()(const Node &n) const {
-		return ((std::hash<int>()(n.nodeNum) ^ (std::hash<int>()(n.priority)/*) ^ (std::hash<int>()(n.heuristicCost)*//* << 1*/)));
+		return ((std::hash<int>()(n.nodeNum)/* ^ (std::hash<int>()(n.priority)<<1/*) ^ (std::hash<int>()(n.heuristicCost)*//* << 1*/));
+		/*std::size_t result = 21;
+		result = result * 18 + std::hash<int>()(n.nodeNum);
+		result = result * 18 + std::hash<int>()(n.priority);
+		result = result * 18 + std::hash<int>()(n.heuristicCost);*/
+		//return result;
 	}
 };
 
