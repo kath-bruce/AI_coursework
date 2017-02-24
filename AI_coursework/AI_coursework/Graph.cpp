@@ -4,7 +4,6 @@
 Graph::Graph(const char * fileName)
 {
 	parseGraph(fileName);
-	goalNode.nodeNum = 60;
 }
 
 void Graph::parseGraph(const char * fname)
@@ -14,7 +13,7 @@ void Graph::parseGraph(const char * fname)
 
 	if (!graphData) {
 		std::cerr << "error loading " << fname << "\n";
-	}
+	} //end if
 
 	std::string input;
 	std::getline(graphData, input);
@@ -23,12 +22,10 @@ void Graph::parseGraph(const char * fname)
 	char equals, comma, dash, openSquareBracket, quotation;
 	int nodeNum, edgeCost;
 
+	//checks first three lines
 	if (input != "graph G {") {
 		std::cerr << "problem with file " << fname << "\ngraph G { is not graph G {\n" << input;
-	}
-	else {
-		std::cout << "graph G { is fine\n";
-	}
+	} //end if
 
 	sstream.str("");
 	sstream.clear();
@@ -36,22 +33,18 @@ void Graph::parseGraph(const char * fname)
 
 	if (input != ("graph[splines=\"true\"]")) {
 		std::cerr << "problem with file " << fname << "\ngraph[splines = \"true\"] is not graph[splines=\"true\"]\n" << input;
-	}
-	else {
-		std::cout << "graph[splines=\"true\"] is fine\n";
-	}
+	} //end if
 
 	sstream.str("");
 	sstream.clear();
 	std::getline(graphData, input);
 
 	if (input != ("node[shape=\"circle\",fixedsize=true,height=0.15]")) {
-		std::cerr << "problem with file " << fname << "\nnode[shape=\"circle\",fixedsize=true,height=0.15] is not node[shape=\"circle\",fixedsize=true,height=0.15]\n" << input;
-	}
-	else {
-		std::cout << "node[shape=\"circle\",fixedsize=true,height=0.15] is fine\n";
-	}
+		std::cerr << "problem with file " << 
+			fname << "\nnode[shape=\"circle\",fixedsize=true,height=0.15] is not node[shape=\"circle\",fixedsize=true,height=0.15]\n" << input;
+	} //end if
 
+	//parse nodes and positions
 	while (true) {
 		sstream.str("");
 		sstream.clear();
@@ -59,9 +52,8 @@ void Graph::parseGraph(const char * fname)
 		sstream.str(input);
 		sstream >> nodeNum >> openSquareBracket;
 		if (openSquareBracket != '[') {
-			std::cout << "finished parsing nodes\n";
 			break;
-		}
+		} //end if
 
 		Node newNode;
 		newNode.nodeNum = nodeNum;
@@ -72,8 +64,8 @@ void Graph::parseGraph(const char * fname)
 			if (comma == ';') {
 				std::cerr << "file " << fname << " contains incorrect syntax for node parsing - comma\n";
 				break;
-			}
-		}
+			} //end if
+		} //end while loop
 
 		sstream >> equals;
 		while (equals != '=') {
@@ -81,27 +73,23 @@ void Graph::parseGraph(const char * fname)
 			if (equals == ';') {
 				std::cerr << "file " << fname << " contains incorrect syntax for node parsing - equals\n";
 				break;
-			}
-		}
+			} //end if
+		} //end while loop
 
 		sstream >> quotation;
 		if (quotation != '\"') {
 			std::cerr << "file " << fname << " contains incorrect syntax for node parsing - \"\n";
 			break;
-		}
+		} //end if
 
 		Position newPos;
 		sstream >> newPos.x >> comma >> newPos.y;
 
 		nodes.insert({ newNode, newPos });
-		std::cout << "inserted node " << newNode.nodeNum << " with pos " << newPos.x << "," << newPos.y << std::endl;
 		nodeCount++;
-	}
+	} //end while loop
 
-	std::cout << "added " << nodeCount << " nodes\n";
-
-	//nodeNum contains first value of first edge and openSquareBracket contains one '-'
-
+	//nodeNum contains first value of first edge
 	Edge firstEdge;
 	firstEdge.from = nodeNum;
 	sstream >> dash >> firstEdge.to;
@@ -113,7 +101,7 @@ void Graph::parseGraph(const char * fname)
 			std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - comma\n";
 			break;
 		}
-	}
+	} //end while loop
 
 	sstream >> equals;
 	while (equals != '=') {
@@ -122,21 +110,20 @@ void Graph::parseGraph(const char * fname)
 			std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - equals\n";
 			break;
 		}
-	}
+	} //end while loop
 
 	sstream >> quotation;
 	if (quotation != '\"') {
 		std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - \"\n";
-	}
+	} //end if
 	sstream >> edgeCost;
 
 	edges.insert({ firstEdge, edgeCost });
 
-	std::cout << "inserted first edge\n";
-
 	sstream.str("");
 	sstream.clear();
 
+	//parse edges and costs
 	while (std::getline(graphData, input)) {
 		sstream.str(input);
 
@@ -149,8 +136,8 @@ void Graph::parseGraph(const char * fname)
 			if (comma == ';') {
 				std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - comma\n";
 				break;
-			}
-		}
+			} //end if
+		} //end while loop
 
 		sstream >> equals;
 		while (equals != '=') {
@@ -158,26 +145,20 @@ void Graph::parseGraph(const char * fname)
 			if (equals == ';') {
 				std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - equals\n";
 				break;
-			}
-		}
+			} //end if
+		} //end while loop
 
 		sstream >> quotation;
 		if (quotation != '\"') {
 			std::cerr << "file " << fname << " contains incorrect syntax for edge parsing - \"\n";
-		}
+		} //end if
 		sstream >> edgeCost;
 
 		edges.insert({ newEdge, edgeCost });
 
-		std::cout << "inserted edge " << newEdge.from << " -- " << newEdge.to << " with cost " << edgeCost << "\n";
-
 		sstream.str("");
 		sstream.clear();
-	}
-
-	std::cout << "inserted edges\n";
-
-	std::cout << "loaded and parsed " << fname << "\n";
+	} //end while loop
 	graphData.close();
 }
 
@@ -185,14 +166,14 @@ std::vector<Node> Graph::getNeighbours(Node current)
 {
 	std::vector<Node> neighbours;
 
-	if (current.nodeNum < 0 || current.nodeNum > nodeCount - 1) {
-		std::cerr << "value out of bounds: " << current.nodeNum << std::endl;
-		return neighbours; // null
-	}
+	if (!nodes.count(current)) {	//error checking
+		std::cerr << "node not found: " << current.nodeNum << std::endl;
+		return neighbours; // neighbours will be null
+	} //end if
 
-	//for loop through edgesNcosts
-	//	if current edge.to or edge.from == current
-	//		add to vector
+	//for loop through edges
+	//	if edge == current
+	//			add to vector
 	//end loop
 
 	for (auto edge : edges) {
@@ -200,21 +181,19 @@ std::vector<Node> Graph::getNeighbours(Node current)
 			Node newNode;
 			newNode.nodeNum = edge.first.to;
 			neighbours.push_back(newNode);
-		}
-		else if (edge.first.to == current.nodeNum) {
+		} //end if
+		else if (edge.first.to == current.nodeNum) {	//edge could be from opposite direction
 			Node newNode;
 			newNode.nodeNum = edge.first.from;
 			neighbours.push_back(newNode);
-		}
-	}
+		} //end if
+	} //end for loop
 
 	return neighbours;
 }
 
 int Graph::getCost(Node current, Node neighbour)
 {
-	//loop through edges
-
 	Edge edge;
 	edge.from = current.nodeNum;
 	edge.to = neighbour.nodeNum;
@@ -222,27 +201,30 @@ int Graph::getCost(Node current, Node neighbour)
 	if (!edges.count(edge)) {
 		edge.from = neighbour.nodeNum;
 		edge.to = current.nodeNum;
-		if (!edges.count(edge)) {
-			return -1;
+		if (!edges.count(edge)) {	//edge could be from opposite direction
+			return -1;				//error
 		}
 		else {
 			return edges.at(edge);
-		}
-
+		} //end if
 	}
 	else {
 		return edges.at(edge);
-	}
+	} //end if
 }
 
 int Graph::heuristic(Node goal, Node next)
 {
-	//todo: error checking!!!!
-	//todo: clean up code
+	if (!nodes.count(goal) || !nodes.count(next)) {	//error checking
+		std::cerr << "node not found\n";
+		return -1;
+	} //end if
+
 	Position goalPos = nodes.at(goal);
 	Position nextPos = nodes.at(next);
-	int result = hypot((goalPos.x - nextPos.x), (goalPos.y - nextPos.y));
-	//hypotenuse
+
+	int result = hypot((goalPos.x - nextPos.x), (goalPos.y - nextPos.y)); //hypotenuse - distance 'as the crow flies'
+
 	return result;
 }
 
