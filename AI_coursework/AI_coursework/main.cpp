@@ -5,7 +5,11 @@
 #include <chrono>
 #include "Graph.h"
 
-//todo::add refs to code
+/*
+REFERENCES
+http://www.redblobgames.com/pathfinding/a-star/introduction.html <-python a* algorithm
+*/
+
 void aStar(Graph graph) {
 	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier; //priority queue to hold nodes that can be investigated
 	
@@ -15,7 +19,6 @@ void aStar(Graph graph) {
 
 	std::unordered_map<Node, int, NodeHasher> cost_so_far; //unordered map to store the cost it took to get to nodes
 
-	//note: maps because????
 	//initialise maps
 	came_from[graph.getStartNode()] = graph.getStartNode(); //start node came from start node
 	cost_so_far[graph.getStartNode()] = 0; //no cost to get to start node
@@ -83,7 +86,6 @@ void aStar(Graph graph) {
 	std::cout << "------------------------------------------------\n";
 }
 
-//todo: comment code
 int main(int argc, char *argv[]) {
 
 	/*
