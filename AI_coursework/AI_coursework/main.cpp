@@ -7,6 +7,7 @@
 
 //TODO: move a* algorithm to own class
 //todo: possibly add user input
+//todo: parse dot graph
 //todo: comment code
 int main(int argc, char *argv[]) {
 
