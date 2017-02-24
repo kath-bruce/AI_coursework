@@ -4,6 +4,16 @@
 
 #include <functional>
 
+/*
+REFERENCES
+http://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key <- hashing for custom struct – using custom struct as key in unordered_map
+http://www.learncpp.com/cpp-tutorial/96-overloading-the-comparison-operators/ <- overloading comparison operators
+http://www.learncpp.com/cpp-tutorial/96-overloading-the-comparison-operators/ <- friend keyword for operator overloading
+http://en.cppreference.com/w/cpp/container/priority_queue <-priority queue
+http://www.cplusplus.com/reference/queue/priority_queue/ <-more priority queue
+https://support.microsoft.com/en-us/help/837697/how-to-use-the-stl-priority-queue-class-with-a-custom-type <- priority queue with custom class
+*/
+
 struct Node {
 	int nodeNum = 0;
 	int priority = 0;

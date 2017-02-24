@@ -4,6 +4,12 @@
 
 #include <functional>
 
+/*
+REFERENCES
+http://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key <- hashing for custom struct – using custom struct as key in unordered_map
+http://www.learncpp.com/cpp-tutorial/96-overloading-the-comparison-operators/ <- overloading comparison operators
+*/
+
 struct Edge {
 	int from, to;
 

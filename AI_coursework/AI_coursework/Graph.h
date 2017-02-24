@@ -2,6 +2,16 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+/*
+REFERENCES
+
+http://www.cplusplus.com/forum/general/184889/ <- reading from file
+http://stackoverflow.com/questions/11719538/how-to-use-stringstream-to-separate-comma-separated-strings <- get line delimiter
+http://stackoverflow.com/questions/7623650/resetting-a-stringstream <-resetting string stream
+http://en.cppreference.com/w/cpp/container/unordered_map/insert <-insertion for unordered_map
+
+*/
+
 #include <unordered_map>
 #include <vector>
 #include <sstream>
@@ -29,9 +39,8 @@ private:
 	Node startNode;
 	Node goalNode;
 	int nodeCount;
-	std::unordered_map<Edge, int, EdgeHasher> edges; //note: should just be a vector of edges??? edge would have weight as well
-	std::unordered_map<Node, Position, NodeHasher> nodes; //note: node could have position inside class
-	//note:unordered_map allows to just get the specific edge or node without have to iterate through it
+	std::unordered_map<Edge, int, EdgeHasher> edges;
+	std::unordered_map<Node, Position, NodeHasher> nodes;
 };
 
 #endif

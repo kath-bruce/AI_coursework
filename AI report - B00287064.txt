@@ -1,0 +1,40 @@
+Pathfinding - AI Assignment - COMP09041
+
+		Algorithm Chosen
+
+The algorithm chosen for this assignment was A*. One of the reasons for this choice is that it is relatively simple to understand and implement. 
+
+		Algorithm Explanation
+
+
+
+		Data Structures Used
+
+
+
+		Results
+
+------------------------------------------------
+Path from node 0 to node 60
+60 >> 52 >> 50 >> 43 >> 34 >> 31 >> 29 >> 24 >> 20 >> 18 >> 15 >> 9 >> 13 >> 0
+Total path cost: 936
+Total time taken: 0.0160678 seconds
+While loop iterations: 31
+Nodes investigated: 42
+------------------------------------------------
+------------------------------------------------
+Path from node 1 to node 61
+61 >> 63 >> 53 >> 46 >> 45 >> 35 >> 25 >> 14 >> 11 >> 2 >> 5 >> 1
+Total path cost: 901
+Total time taken: 0.0283319 seconds
+While loop iterations: 57
+Nodes investigated: 59
+------------------------------------------------
+------------------------------------------------
+Path from node 0 to node 63
+63 >> 53 >> 46 >> 45 >> 35 >> 25 >> 21 >> 18 >> 15 >> 9 >> 13 >> 0
+Total path cost: 988
+Total time taken: 0.0202275 seconds
+While loop iterations: 40
+Nodes investigated: 49
+------------------------------------------------
