@@ -23,10 +23,11 @@ public:
 	int getCost(Node current, Node neighbour);
 	int heuristic(Node goal, Node next);
 private:
+	void parseGraph(const char *fname);
 	Node startNode;
 	Node goalNode;
 	int nodeCount;
-	std::unordered_map<Edge, int, EdgeHasher> edgesNcosts; //note: should just be a vector of edges??? edge would have weight as well
+	std::unordered_map<Edge, int, EdgeHasher> edges; //note: should just be a vector of edges??? edge would have weight as well
 	std::unordered_map<Node, Position, NodeHasher> nodes; //note: node could have position inside class
 	//note:unordered_map allows to just get the specific edge or node without have to iterate through it
 };

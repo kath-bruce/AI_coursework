@@ -6,7 +6,7 @@
 #include "Graph.h"
 
 //TODO: move a* algorithm to own class
-//todo: possibly add user input
+//todo: possibly add user input - just run multiple times - 0-60, 1-61, 0-63
 //todo: parse dot graph
 //todo: comment code
 int main(int argc, char *argv[]) {
@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
 				came_from[next] = current
 	*/
 
-	Graph graph("graphData.txt");
+	//Graph graph("graphData.txt");
+	Graph graph("graphData.dot");
 	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier;
 	graph.setStartNode(0);
 	graph.setGoalNode(60);
