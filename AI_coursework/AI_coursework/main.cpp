@@ -35,7 +35,6 @@ int main(int argc, char *argv[]) {
 				came_from[next] = current
 	*/
 
-	//Graph graph("graphData.txt");
 	Graph graph("graphData.dot");
 	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier;
 	graph.setStartNode(0);

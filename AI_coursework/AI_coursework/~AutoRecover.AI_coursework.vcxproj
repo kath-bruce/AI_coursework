@@ -147,7 +147,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graph.cpp" />
-    <ClCompile Include="GraphParser.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +155,11 @@
   <ItemGroup>
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Graph.h" />
-    <ClInclude Include="GraphParser.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Position.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="graphdata.dot" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

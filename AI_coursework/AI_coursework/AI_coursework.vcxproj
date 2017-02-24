@@ -147,16 +147,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graph.cpp" />
-    <ClCompile Include="GraphParser.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="graphdata.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Graph.h" />
-    <ClInclude Include="GraphParser.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Position.h" />
   </ItemGroup>

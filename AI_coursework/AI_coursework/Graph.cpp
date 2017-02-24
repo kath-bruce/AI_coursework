@@ -3,15 +3,12 @@
 
 Graph::Graph(const char * fileName)
 {
-	//GraphParser::parseGraph(fileName, nodeCount, edges, nodes);
 	parseGraph(fileName);
 	goalNode.nodeNum = 60;
 }
 
 void Graph::parseGraph(const char * fname)
 {
-	// TODO: move var declarations maybes
-
 	std::ifstream graphData;
 	graphData.open(fname);
 

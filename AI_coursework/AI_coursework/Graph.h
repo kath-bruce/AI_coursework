@@ -4,10 +4,12 @@
 
 #include <unordered_map>
 #include <vector>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 #include "Edge.h"
 #include "Node.h"
 #include "Position.h"
-#include "GraphParser.h"
 
 class Graph {
 public:
