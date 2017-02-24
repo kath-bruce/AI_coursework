@@ -20,12 +20,12 @@ struct Node {
 
 	//operator < overloaded as Node is used in priority queue
 	friend bool operator< (const Node& n1, const Node& n2) {
-		return (n1.priority < n2.priority);
+		return (n1.priority > n2.priority);
 	}
 
 	//operator > overloaded as Node is used in priority queue
 	friend bool operator> (const Node& n1, const Node& n2) {
-		return (n1.priority > n2.priority);
+		return (n1.priority < n2.priority);
 	}
 
 	//operator == overloaded as Node is used as key in unordered maps
@@ -37,7 +37,7 @@ struct Node {
 //hasher to allow Node to be used a key in unordered maps
 struct NodeHasher {
 	std::size_t operator()(const Node &n) const {
-		return ((std::hash<int>()(n.nodeNum)));
+		return ((std::hash<int>()(n.nodeNum)));	//only nodeNum is hashed as it means that Nodes will be considered unique by the nodeNum
 	}
 };
 

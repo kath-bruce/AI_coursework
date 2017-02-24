@@ -11,12 +11,11 @@ http://www.redblobgames.com/pathfinding/a-star/introduction.html <-python a* alg
 */
 
 void aStar(Graph graph) {
-	std::priority_queue<Node, std::vector<Node>, std::greater<std::vector<Node>::value_type>> frontier; //priority queue to hold nodes that can be investigated
+	std::priority_queue<Node, std::vector<Node>, std::less<std::vector<Node>::value_type>> frontier; //priority queue to hold nodes that can be investigated
 	
 	frontier.push(graph.getStartNode()); //add the start node
 
 	std::unordered_map<Node, Node, NodeHasher> came_from; //unordered map to store how the algorithm traverses through the graph
-
 	std::unordered_map<Node, int, NodeHasher> cost_so_far; //unordered map to store the cost it took to get to nodes
 
 	//initialise maps
@@ -113,7 +112,7 @@ int main(int argc, char *argv[]) {
 				came_from[next] = current
 	*/
 
-	Graph graph("graphData.dot");
+	Graph graph("graphdata.dot");
 
 	graph.setStartNode(0);
 	graph.setGoalNode(60);
